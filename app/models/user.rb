@@ -4,7 +4,4 @@ class User < ApplicationRecord
 
     validates :name, presence: true
 
-    def get_todos
-
-    end
 end
