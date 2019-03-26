@@ -14,6 +14,7 @@ module Api
       def create
         user = User.new(user_params)
         if user.save
+          render json: {status: 200,  data: user},status: :ok
         else
           render json: {status: 500, data: user.errors}, status: :unprocessable_entity
         end
@@ -27,7 +28,7 @@ module Api
       def update
         user = User.find(params[:id])
         if user.update_attributes(user_params)
-          render json: {status: 200, data:article},status: :ok
+          render json: {status: 200, data: user},status: :ok
         else
           render json: {status: 500, message:'User not updated', data:user.errors},status: :unprocessable_entity
         end
@@ -39,6 +40,34 @@ module Api
         todo = Todo.order("created_at DESC")
         render json: {status: 200, data: todo}, status: :ok
       end
+
+      def show
+        todo = Todo.find_by(params[:id])
+        render json: {status: 200, data: todo}, status: :ok
+      end
+
+      def create
+        todo = Todo.new(todo_params)
+        if todo.save
+          render json: {status: 200, data: todo}, status: :ok
+        else
+          render json: {status: 500, data: todo.errors}, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        Todo.find(params[:id]).destroy
+        render json: {status: 200, data: nil, message: "Todo deleted"}, status: :ok
+      end
+
+      def update
+        todo = Todo.find(params[:id])
+        if todo.update_attributes(todo_params)
+          render json: {status: 200, data: todo},status: :ok
+        else
+          render json: {status: 500, message:'Todo not updated', data: todo.errors},status: :unprocessable_entity
+        end
+      end
     end
 
     class ListController < ApplicationController
@@ -46,12 +75,37 @@ module Api
         list = List.order("created_at DESC")
         render json: {status: 200, data: list}, status: :ok
       end
+
+      def show
+        list = List.find_by(params[:id])
+        render json: {status: 200, data: list}, status: :ok
+      end
+
+      def create
+        list = List.new(list_params)
+        if list.save
+          render json: {status: 200, data: list}, status: :ok
+        else
+          render json: {status: 500, data: list.errors}, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        List.find(params[:id]).destroy
+        render json: {status: 200, data: nil, message: "List deleted"}, status: :ok
+      end
+
+      
     end
 
     private
 
     def user_params
       params.permit(:name)
+    end
+
+    def todo_params
+      params.permit(:priority, :task)
     end
   end
 end
