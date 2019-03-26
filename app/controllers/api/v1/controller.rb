@@ -14,7 +14,7 @@ module Api
       def create
         user = User.new(user_params)
         if user.save
-          render json: {status: 200,  data: user},status: :ok
+          render json: {status: 200, data: user}, status: :ok
         else
           render json: {status: 500, data: user.errors}, status: :unprocessable_entity
         end
@@ -28,10 +28,16 @@ module Api
       def update
         user = User.find(params[:id])
         if user.update_attributes(user_params)
-          render json: {status: 200, data: user},status: :ok
+          render json: {status: 200, data: user}, status: :ok
         else
-          render json: {status: 500, message:'User not updated', data:user.errors},status: :unprocessable_entity
+          render json: {status: 500, message: "User not updated", data: user.errors}, status: :unprocessable_entity
         end
+      end
+
+      private
+
+      def user_params
+        params.permit(:name)
       end
     end
 
@@ -63,10 +69,16 @@ module Api
       def update
         todo = Todo.find(params[:id])
         if todo.update_attributes(todo_params)
-          render json: {status: 200, data: todo},status: :ok
+          render json: {status: 200, data: todo}, status: :ok
         else
-          render json: {status: 500, message:'Todo not updated', data: todo.errors},status: :unprocessable_entity
+          render json: {status: 500, message: "Todo not updated", data: todo.errors}, status: :unprocessable_entity
         end
+      end
+
+      private
+
+      def todo_params
+        params.permit(:task, :priority)
       end
     end
 
@@ -94,18 +106,6 @@ module Api
         List.find(params[:id]).destroy
         render json: {status: 200, data: nil, message: "List deleted"}, status: :ok
       end
-
-      
-    end
-
-    private
-
-    def user_params
-      params.permit(:name)
-    end
-
-    def todo_params
-      params.permit(:priority, :task)
     end
   end
 end
