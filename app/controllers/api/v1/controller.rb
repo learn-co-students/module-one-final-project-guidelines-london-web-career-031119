@@ -10,8 +10,6 @@ module Api
         user = User.find_by(params[:name])
         render json: {status: 200, data: user}, status: :ok
       end
-
-      
     end
 
     class TodoController < ApplicationController
@@ -24,6 +22,13 @@ module Api
       #  todo = User.find_by(params[:name])
       #  render json: {status: 200, data: todo}, status: :ok
       #end
+    end
+
+    class ListController < ApplicationController
+      def index
+        list = List.order("created_at DESC")
+        render json: {status: 200, data: list}, status: :ok
+      end
     end
   end
 end
