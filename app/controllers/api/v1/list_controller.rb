@@ -36,7 +36,7 @@ class Api::V1::ListController < ApplicationController
     private
 
     def list_params
-      params.permit(:user_id, :todo_id)
+      params.permit(:user_id, :todo_id, :data)
     end
 
     def split_query(arg, pos)

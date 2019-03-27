@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :user, :todo, :list
       post '/matches', to: 'user#matches'
       delete '/destroy_selected/:details', to: 'list#destroy_selected'
-      #post '/todo', to: ''
+      post '/todo/:details', to: 'todo#create'
     end
   end
 end

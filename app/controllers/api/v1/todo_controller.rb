@@ -10,9 +10,13 @@ class Api::V1::TodoController < ApplicationController
     end
 
     def create
+
       todo = Todo.new(todo_params)
-      # List.new(todo.id, todo_params[:user_id])
+      
+      
       if todo.save
+        list = List.new({user_id: params[:user_id], todo_id: todo.id})
+        list.save
         render json: {status: 200, data: todo}, status: :ok
       else
         render json: {status: 500, data: todo.errors}, status: :unprocessable_entity
@@ -36,6 +40,12 @@ class Api::V1::TodoController < ApplicationController
     private
 
     def todo_params
-      params.permit(:task, :priority, :data, :user_id)
+      params.require(:data).permit!
+    end
+
+    def split_query(arg, pos)
+      puts arg
+      #puts "#{arg} = arg, #{pos} = pos"
+      #arg.split("&")[pos].split("=")[1]
     end
 end
