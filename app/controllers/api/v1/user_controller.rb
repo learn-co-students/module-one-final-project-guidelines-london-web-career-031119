@@ -5,8 +5,12 @@ class Api::V1::UserController < ApplicationController
   end
 
   def show
-    user = User.find_by(params[:id])
-    render json: {status: 200, data: user}, status: :ok
+    user = User.find(params[:id])
+    if user
+      render json: {status: 200, data: user}, status: :ok
+    else 
+      render json: {status: 422, message: "No user"}, status: :unprocessable_entity
+    end
   end
 
   def create
@@ -33,8 +37,13 @@ class Api::V1::UserController < ApplicationController
   end
 
   def matches
-    user = User.find(params[:id]).todos
-    render json: {status: 200, data: user}, status: :ok
+    if User.find(params[:id]).todos.size > 0
+      user = User.find(params[:id]).todos
+      puts "USER HERE #{user.size}"
+      render json: {status: 200, data: user}, status: :ok
+    else
+      render json: {status: 422, message: "No task for user"}, status: :unprocessable_entity
+    end
   end
 
   private
