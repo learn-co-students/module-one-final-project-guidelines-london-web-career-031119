@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       resources :user, :todo, :list
-      get '/matches', to: 'user#matches'
+      post '/matches', to: 'user#matches'
+      delete '/destroy_selected/:details', to: 'list#destroy_selected'
     end
   end
 end

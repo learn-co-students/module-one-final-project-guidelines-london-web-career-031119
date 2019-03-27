@@ -11,6 +11,7 @@ class Api::V1::TodoController < ApplicationController
 
     def create
       todo = Todo.new(todo_params)
+      # List.new(todo.id, todo_params[:user_id])
       if todo.save
         render json: {status: 200, data: todo}, status: :ok
       else
@@ -35,6 +36,6 @@ class Api::V1::TodoController < ApplicationController
     private
 
     def todo_params
-      params.permit(:task, :priority)
+      params.permit(:task, :priority, :data, :user_id)
     end
 end

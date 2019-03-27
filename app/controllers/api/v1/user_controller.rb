@@ -5,7 +5,7 @@ class Api::V1::UserController < ApplicationController
   end
 
   def show
-    user = User.find_by(params[:name])
+    user = User.find_by(params[:id])
     render json: {status: 200, data: user}, status: :ok
   end
 
@@ -32,14 +32,14 @@ class Api::V1::UserController < ApplicationController
     end
   end
 
-  #def matches
-  #  # list = List.order("created_at DESC LIMIT = 1")
-  #  render json: {message: user_params}, status: :ok
-  #end
+  def matches
+    user = User.find(params[:id]).todos
+    render json: {status: 200, data: user}, status: :ok
+  end
 
   private
 
   def user_params
-    params.permit(:name)
+    params.permit(:name, :id)
   end
 end

@@ -22,4 +22,20 @@ class Api::V1::ListController < ApplicationController
       List.find(params[:id]).destroy
       render json: {status: 200, data: nil, message: "List deleted"}, status: :ok
     end
+
+    def destroy_selected
+      Todo.find(split_query(params[:details], 1)).destroy
+      List.where("user_id = #{split_query(params[:details], 0)} AND todo_id = #{split_query(params[:details], 0)}").destroy
+      render json: {status: 200, message: 'Todo deleted'}, status: :ok
+    end
+
+    private
+
+    def list_params
+      params.permit(:user_id, :todo_id)
+    end
+
+    def split_query(arg, pos)
+      arg.split("&")[pos].split("=")[1]
+    end
 end
