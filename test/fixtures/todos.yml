@@ -2,8 +2,8 @@
 
 one:
   task: MyText
-  priority: 1
+  priority: "High"
 
 two:
   task: MyText
-  priority: 1
+  priority: "High"

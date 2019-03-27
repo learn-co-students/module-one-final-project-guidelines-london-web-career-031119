@@ -39,7 +39,6 @@ class Api::V1::UserController < ApplicationController
   def matches
     if User.find(params[:id]).todos.size > 0
       user = User.find(params[:id]).todos
-      puts "USER HERE #{user.size}"
       render json: {status: 200, data: user}, status: :ok
     else
       render json: {status: 422, message: "No task for user"}, status: :unprocessable_entity

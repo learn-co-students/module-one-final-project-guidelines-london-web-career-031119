@@ -26,7 +26,7 @@ class Api::V1::ListController < ApplicationController
     def destroy_selected
       if Todo.find_by(id: split_query(params[:details], 1))
         Todo.delete(split_query(params[:details], 1))
-        List.delete("user_id = #{split_query(params[:details], 0)} AND todo_id = #{split_query(params[:details], 0)}")
+        List.where("user_id = #{split_query(params[:details], 0)} AND todo_id = #{split_query(params[:details], 1)}")[0].destroy
         render json: {status: 200, message: 'Todo deleted'}, status: :ok
       else
         render json: {status: 422, message: "No model found"}, status: :unprocessable_entity
@@ -40,7 +40,6 @@ class Api::V1::ListController < ApplicationController
     end
 
     def split_query(arg, pos)
-      puts "#{arg} = arg, #{pos} = pos"
       arg.split("&")[pos].split("=")[1]
     end
 end

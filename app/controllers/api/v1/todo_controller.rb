@@ -44,7 +44,6 @@ class Api::V1::TodoController < ApplicationController
     end
 
     def split_query(arg, pos)
-      puts arg
       #puts "#{arg} = arg, #{pos} = pos"
       #arg.split("&")[pos].split("=")[1]
     end

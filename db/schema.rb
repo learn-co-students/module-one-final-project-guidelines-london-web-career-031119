@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_03_25_201002) do
 
   create_table "todos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "task"
-    t.integer "priority"
+    t.text "priority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
